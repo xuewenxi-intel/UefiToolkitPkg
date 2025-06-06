@@ -18,7 +18,7 @@ schedules:
 jobs:
 - job: WindowsBuild
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-latest'
 
   steps:
   - checkout: self  # self represents the repo where the initial Pipelines YAML file was found
@@ -41,11 +41,11 @@ jobs:
       set PYTHON_HOME=$(PYTHON3)
       set NASM_PREFIX=%cd%\UefiToolkitPkg\Tools\Nasm\
       call edksetup.bat rebuild
-      call build -a IA32 -a X64 -b RELEASE -t VS2019 -p UefiToolkitPkg\UefiPkg.dsc
+      call build -a IA32 -a X64 -b RELEASE -t VS2022 -p UefiToolkitPkg\UefiPkg.dsc
     displayName: 'Run a Windows build script'
 
   - script:
-      xcopy /y ..\edk2\Build\UefiToolkitPkg\RELEASE_VS2019\X64\*.efi $(Build.ArtifactStagingDirectory)\
+      xcopy /y ..\edk2\Build\UefiToolkitPkg\RELEASE_VS2022\X64\*.efi $(Build.ArtifactStagingDirectory)\
     displayName: 'Copy build files to Artifact'
 
   - task: PublishBuildArtifacts@1
